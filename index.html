@@ -1,76 +1,93 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>To do list</title>
-    <meta name = "viewport" content ="width=device-width,initial-scale = 1.0">
+    <title>To do App</title>
     <style>
       body{
         text-align: center;
+        font-size: 18px;
+        color: white;
       }
       input{
-        border: 2px solid black;
+        width:70%;
+        padding: 10px;
         border-radius: 10px;
-        padding: 11px;
+        border: 2px solid black;
         font-size: 18px;
       }
       button{
-        background-color: red;
+        background-color:red ;
         color: white;
         border: none;
         border-radius: 10px;
+        font-size: 25px;
         padding: 10px;
-        font-size: 18px;
-        margin: 10px;
+        margin: 5px;
+        transition: background-color 0.5s transform 0.3s;
       }
-      #container{
-        background-color:skyblue;
+      button:hover{
+        background-color: green;
+        transform: scale(1.1);
+      }
+      #todo{
+        padding: 10px;
+        border: 2px solid black;
+        background-color: skyblue;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
         border-radius: 10px;
+        transition: background-color 0.5s transform 0.3s;
       }
-      @media(max-width:600px ){
-        #container{
-          width:100%;
-          height: 50%;
-        }
-        h1{
-          width:90%;
-        }
+      #todo:hover{
+        background-color: grey;
+        transform: scale(1.0);
+      }
+      @media(width:600px){
         input{
-          width: 80%;
+          width: 70%;
         }
         button{
-          width:60%;
+          width: 70%;
+        }
+        #todo{
+          width: 90%;
+          
         }
       }
     </style>
   </head>
   <body>
-    <div id="container">
-    <h1>To do list</h1>
-    <input id="input" type="text" placeholder="Type the task"><br>
-    <button id="btn">Add Task</button>
+    <div id="todo">
+    <input id="input" type="text"><br>
+    <button id="btn">Add task</button>
     <ul id="ul"></ul>
     <p id="display"></p>
     </div>
     <script>
       let i = document.getElementById("input")
-      let button = document.getElementById("btn")
+      let b = document.getElementById("btn")
+      let u = document.getElementById("ul")
       let dis = document.getElementById("display")
-      let l = document.getElementById("ul")
-      button.addEventListener("click", function(){
-        let n = i.value.trim()
-        if (n === ""){
-          alert("Please enter the task")
-        }
+      b.addEventListener("click",function(){
         let li = document.createElement("li")
-        li.textContent = n
+        li.innerText = i.value.trim()
+        i.value = ""
+        li.addEventListener("click",function(){
+          li.style.textDecoration = li.style.textDecoration === "line-through"?"none":"line-through"
+        })
+        
         let del = document.createElement("button")
-        del.textContent = "delete"
-        del.addEventListener("click", function(){
-        li.remove()
-      })
-      li.appendChild(del)
-      l.appendChild(li)
-      i.value = ""
+        del.textContent = "❌"
+        del.addEventListener("click",function(){
+          li.remove()
+          event.stopPropagation()
+        })
+        u.appendChild(li)
+        li.appendChild(del)
       })
     </script>
   </body>
